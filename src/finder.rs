@@ -27,8 +27,6 @@ pub fn find_lcps(elf_bytes: &[u8]) -> anyhow::Result<Vec<LcpEntry>> {
         let mut offset = 0usize;
         for inst in decoder {
             let len = inst.len();
-
-            // These instructions are not subject to LCP stalls
             if matches!(inst.op1_kind(), OpKind::Immediate16)
                 && !matches!(inst.code(), Code::Mov_r16_imm16 | Code::Mov_rm16_imm16)
             {
